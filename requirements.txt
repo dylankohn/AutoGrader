@@ -1,0 +1,6 @@
+python-docx
+streamlit
+pymupdf
+openai==0.27.8
+PyPDF2
+python-dotenv
