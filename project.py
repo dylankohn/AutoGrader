@@ -24,12 +24,12 @@ def extract_text_from_pdf(pdf_file):
 
 # Function to grade an essay using OpenAI
 def grade_essay(essay_text, rubric_text):
-    prompt = f"I am a college level student. Grade the following essay based on this rubric and just output the score:\n{rubric_text}\n\nEssay:\n{essay_text}. Try to avoid giving a perfect grade I am looking for feedback"
+    prompt = f"I am a college level student. Grade the following homework based on this rubric and just output the score:\n{rubric_text}\n\nEssay:\n{essay_text}. Try to avoid giving a perfect grade I am looking for feedback"
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "You are an essay grading assistant."},
+                {"role": "system", "content": "You are a homework grading assistant."},
                 {"role": "user", "content": prompt},
             ],
             max_tokens=500,
@@ -42,6 +42,7 @@ def grade_essay(essay_text, rubric_text):
 
 # Streamlit UI
 st.title("AutoGrader")
+st.subheader("Upload your homework and your rubric and get a projected score with feedback on what to improve on.")
 
 essay_file = st.file_uploader("Upload your homework (Word or PDF)", type=["docx", "pdf"])
 rubric_file = st.file_uploader("Upload your rubric (Word or PDF)", type=["docx", "pdf"])
@@ -60,4 +61,4 @@ if essay_file and rubric_file:
     grading_feedback = grade_essay(essay_text, rubric_text)
     st.write(grading_feedback)
 else:
-    st.warning("Please upload both the essay and the rubric.")
+    st.warning("Please upload both the homework and the rubric.")
